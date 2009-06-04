@@ -30,6 +30,7 @@ private:
 	void update_projectiles();
 	void update_enemies();
 	void update_textinfo();
+	void display_gameover();
 	
 	void events();	
 	void generate_enemies();

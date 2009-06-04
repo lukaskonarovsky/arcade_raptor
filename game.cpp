@@ -216,17 +216,27 @@ void Game::update() {
 	}
 	
 	if (!player->isAlive()) {
-		SDL_FillRect(mpScreen, NULL, 10);
-		
-		SDL_Color color = {200, 200, 200};
-		SDL_Surface *text_surface;
-		text_surface = TTF_RenderText_Solid(mpFont, "You loose.", color);
-		SDL_BlitSurface(text_surface, NULL, mpScreen, NULL);
-		
-		SDL_Flip(mpScreen);
-		SDL_Delay(1400);
-		gameover = true;
+		display_gameover();
 	}
+}
+
+void Game::display_gameover() {
+	SDL_FillRect(mpScreen, NULL, 10);
+	sprintf(text_info, "Game finished. Final score: %d", score);
+	cout << text_info << endl;
+	SDL_Rect dest;
+	dest.x = 210;
+	dest.y = 110;
+	dest.w = 300;
+	dest.h = 25;
+	SDL_Color color = {200, 200, 200};
+	SDL_Surface *text_surface;
+	text_surface = TTF_RenderText_Solid(mpFont, text_info, color);
+	SDL_BlitSurface(text_surface, NULL, mpScreen, &dest);
+	SDL_Flip(mpScreen);
+	SDL_Delay(1440);
+
+	gameover = true;
 }
 
 /* Main game loop */
