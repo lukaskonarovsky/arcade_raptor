@@ -16,8 +16,8 @@ void Ship::init() {
 
 }
 
-Ship::Ship(int x, int y, int health, string name): mX(x), mY(y), mName(name), mHealth(health), mShoots(0) {
-	load_image();
+Ship::Ship(int x, int y): mX(x), mY(y), mShoots(0) {
+
 }
 
 Ship::~Ship(void) {

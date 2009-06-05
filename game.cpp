@@ -43,7 +43,7 @@ void Game::init() {
 	generate_enemies();
 	
 	// player ship
-	player = new PlayerShip(50, 400, 100);
+	player = new PlayerShip(50, 400);
 }
 
 bool test_collision(SDL_Rect& r1, SDL_Rect& r2) {
@@ -73,28 +73,17 @@ bool enemy_not_alive(Ship* e) {
 }
 
 
+/**
+ * Generate 1 or 2 enemies of random power
+ */
 void Game::generate_enemies() {
-	if (rand() % 2 + 1 == 1) {
-		EnemyShip* enemy = new EnemyShip(320, 50, 40, "rain");
-		enemies.push_back(enemy);
-		if (rand() % 2 + 1 == 1) {
-			EnemyShip* enemy = new EnemyShip(20, 20, 70, "doomer");
-			enemies.push_back(enemy);
-		} 	
-	} else {
-		if (rand() % 2 + 1 == 1) {
-			EnemyShip* enemy = new EnemyShip(120, 20, 90, "darkrain");
-			enemies.push_back(enemy);
-		} else {
-			EnemyShip* enemy = new EnemyShip(500, 10, 120, "fenix");
-			enemies.push_back(enemy);
-		}
-		if (rand() % 4 + 1 == 1) {
-			EnemyShip* enemy = new EnemyShip(10, 50, 20, "smallrain");
-			enemies.push_back(enemy);
-		}
+	int fortune = rand() % 6; // 0..5
+	if ((fortune < 2) && (rand() % 3 == 1)) { 
+		EnemyShip* second_enemy = new EnemyShip(320, 50, fortune); 
+		enemies.push_back(second_enemy);
 	}
-	
+	EnemyShip* enemy = new EnemyShip(320, 50, fortune);
+	enemies.push_back(enemy);
 }
 
 void Game::events() {

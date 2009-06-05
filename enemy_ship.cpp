@@ -1,15 +1,19 @@
 #include "enemy_ship.h"
 
-EnemyShip::EnemyShip(int x, int y, int health, string name): Ship(x, y, health, name), mMoves(0) {
+EnemyShip::EnemyShip(int x, int y, int power): Ship(x, y), mMoves(0), mPower(power) {
 	mDirection = rand() % 4 + 1;
 	mTopBoundY = 0;
 	mBottomBoundY = 360; 
-	if (name == "smallrain") { mPower = 0; }
-	if (name == "rain")      { mPower = 1; }
- 	if (name == "darkrain")  { mPower = 2; }
-	if (name == "doomer")    { mPower = 3; }
-	if (name == "fenix")     { mPower = 4; }
+	mHealth = power * 25 + 10;
 	
+	if (mPower == 0) { mName = "smallrain"; }
+	if (mPower == 1) { mName = "rain"; }
+	if (mPower == 2) { mName = "darkrain"; }
+	if (mPower == 3) { mName = "doomer"; }
+	if (mPower == 4) { mName = "fenix"; }
+	if (mPower == 5) { mName = "blackfenix"; }
+
+	load_image();
 }
 
 void EnemyShip::change_direction() {

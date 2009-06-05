@@ -11,7 +11,7 @@ private:
 	int mPower;
 	
 public:
-	EnemyShip(int x, int y, int health, string name);	
+	EnemyShip(int x, int y, int power);	
 	bool can_shoot();
 	void random_move();
 	void change_direction();

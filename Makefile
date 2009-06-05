@@ -1,4 +1,4 @@
-CFLAGS=-Wall 
+CFLAGS=-Wall -O2
 FILES=main.cpp game.cpp ship.cpp player_ship.cpp enemy_ship.cpp projectile.cpp
 EXE=raptor
 LIBS= -I/Library/Frameworks/SDL.framework/Headers \

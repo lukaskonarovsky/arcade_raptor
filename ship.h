@@ -22,7 +22,7 @@ public:
 	static void init();
 	static const int LEFT, RIGHT, UP, DOWN;
 	
-	Ship(int x, int y, int health, string name);
+	Ship(int x, int y);
 	virtual ~Ship(void);
 	
 	void load_image();
