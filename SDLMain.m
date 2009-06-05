@@ -81,19 +81,30 @@ static NSString *getApplicationName(void)
 /* The main class of the application, the application's delegate */
 @implementation SDLMain
 
-/* Set the working directory to the .app's parent directory */
+/* Set the working directory to the .app's Resource directory */
 - (void) setupWorkingDirectory:(BOOL)shouldChdir
 {
     if (shouldChdir)
     {
-        char parentdir[MAXPATHLEN];
-		CFURLRef url = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-		CFURLRef url2 = CFURLCreateCopyDeletingLastPathComponent(0, url);
-		if (CFURLGetFileSystemRepresentation(url2, true, (UInt8 *)parentdir, MAXPATHLEN)) {
-	        assert ( chdir (parentdir) == 0 );   /* chdir to the binary app's parent */
-		}
-		CFRelease(url);
-		CFRelease(url2);
+		
+		char resourcePath[PATH_MAX];
+		CFBundleRef mainBundle;
+		CFURLRef resourcesDirectoryURL;
+
+		mainBundle = CFBundleGetMainBundle();
+		resourcesDirectoryURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
+		CFURLGetFileSystemRepresentation(resourcesDirectoryURL, true, (UInt8 *) resourcePath, PATH_MAX);
+		CFRelease(resourcesDirectoryURL);
+		chdir(resourcePath);
+		
+		//         char parentdir[MAXPATHLEN];
+		// CFURLRef url = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+		// //CFURLRef url2 = CFURLCreateCopyDeletingLastPathComponent(0, url);
+		// if (CFURLGetFileSystemRepresentation(url, true, (UInt8 *)parentdir, MAXPATHLEN)) {
+		// 	        assert ( chdir (parentdir) == 0 );   /* chdir to the binary app's parent */
+		// }
+		// CFRelease(url);
+		// //CFRelease(url2);
 	}
 
 }

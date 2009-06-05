@@ -16,7 +16,7 @@ void Game::init() {
 	}
 	
 	mpScreen = SDL_SetVideoMode(640, 480, 16, SDL_HWSURFACE | SDL_DOUBLEBUF);
-	SDL_WM_SetCaption("SDL Raptor", 0);
+	SDL_WM_SetCaption("Raptor", 0);
 	if (mpScreen == NULL) {
 		fprintf(stderr, "Video 640x480 mode failed: %s\n", SDL_GetError()); exit(1);
 	}
@@ -158,7 +158,7 @@ void Game::update_enemies() {
 		if (!(*s)->isAlive()) {
 			score+= (5 + (*s)->getPower());
 			delete *s;
-			enemies.erase(s++);
+			enemies.erase(s);
 		}
 	}
 	if (enemies.empty()) {
