@@ -7,11 +7,11 @@ using namespace std;
 
 class PlayerShip: public Ship {
 private:
-	int mKills;
-	
+  int mKills;
+  
 public:
-	PlayerShip();
-	bool can_shoot();
+  PlayerShip();
+  bool can_shoot();
 };
 
 #endif
