@@ -1,7 +1,7 @@
 #include "ship.h"
 #include "player_ship.h"
 
-PlayerShip::PlayerShip(int x, int y): Ship(x, y) {
+PlayerShip::PlayerShip(): Ship(300, 400) {
 	mTopBoundY = 0 + 300;
 	mBottomBoundY = 430;
 	mName = "raptor";

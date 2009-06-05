@@ -10,7 +10,7 @@ private:
 	int mKills;
 	
 public:
-	PlayerShip(int x, int y);
+	PlayerShip();
 	bool can_shoot();
 };
 

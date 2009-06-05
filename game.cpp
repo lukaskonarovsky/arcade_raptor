@@ -43,7 +43,7 @@ void Game::init() {
 	generate_enemies();
 	
 	// player ship
-	player = new PlayerShip(50, 400);
+	player = new PlayerShip();
 }
 
 bool test_collision(SDL_Rect& r1, SDL_Rect& r2) {
