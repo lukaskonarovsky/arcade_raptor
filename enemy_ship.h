@@ -9,6 +9,7 @@ class EnemyShip: public Ship {
 private:
 	int mMoves;
 	int mPower;
+	int mChaoticLevel;
 	
 public:
 	EnemyShip(int x, int y, int power);	

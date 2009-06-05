@@ -24,7 +24,7 @@ void Game::init() {
 	if (TTF_Init() == -1)  {
 		fprintf(stderr, "SDL_ttf failed: %s\n", TTF_GetError()); exit(1);
 	}
-	mpFont = TTF_OpenFont("data/Vera.ttf", 16);
+	mpFont = TTF_OpenFont("data/Vera.ttf", 15);
 	atexit(SDL_Quit);
 	
 	// load background and images
@@ -120,8 +120,8 @@ void Game::update_projectiles() {
 				(*p)->destroy();
 			} else {
 				(*p)->update();
-				(*p)->draw(mpScreen);
 			}
+			(*p)->draw(mpScreen);
 		}
 	}
 	player_shoots.remove_if(projectile_not_alive);
@@ -173,8 +173,9 @@ void Game::update_textinfo() {
 	dest.y = 10;
 	dest.w = 400;
 	dest.h = 25;
-	SDL_Color color={128, 128, 128};
+	SDL_Color color={200, 200, 180};
 	mpTextSurface = TTF_RenderUTF8_Solid(mpFont, text_info, color);
+	SDL_SetAlpha(mpTextSurface, SDL_SRCALPHA, 146);
 	SDL_BlitSurface(mpTextSurface, NULL, mpScreen, &dest);
 	SDL_FreeSurface(mpTextSurface);
 }

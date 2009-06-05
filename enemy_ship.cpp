@@ -5,12 +5,13 @@ EnemyShip::EnemyShip(int x, int y, int power): Ship(x, y), mMoves(0), mPower(pow
 	mTopBoundY = 0;
 	mBottomBoundY = 360;
 	mHealth = power * 25 + 10;
+	mChaoticLevel = 1;
 	
 	if (mPower == 0) { mName = "smallrain"; }
-	if (mPower == 1) { mName = "rain"; }
+	if (mPower == 1) { mName = "rain"; mChaoticLevel = 2; }
 	if (mPower == 2) { mName = "darkrain"; }
 	if (mPower == 3) { mName = "doomer"; }
-	if (mPower == 4) { mName = "fenix"; }
+	if (mPower == 4) { mName = "fenix"; mChaoticLevel = 2; }
 	if (mPower == 5) { mName = "blackfenix"; }
 
 	load_image();
@@ -23,10 +24,9 @@ void EnemyShip::change_direction() {
 void EnemyShip::random_move() {
 	mMoves++;
 	move();
-	if (mMoves >= 15) {
+	if (mMoves >= (30 - 10 * mChaoticLevel)) {
 		mMoves = 0;
-		change_direction();
-		// if (rand()%8+1 == 5) change_direction();
+		if (rand() % mChaoticLevel == 0) change_direction();
 	}	
 }
 
