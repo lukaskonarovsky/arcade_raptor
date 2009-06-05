@@ -23,6 +23,7 @@ private:
 	int score;
 	int slowcounter;
 	int enemycounter;
+	Uint32 next_time;
 	bool gameover;
 	char text_info[100];
 	
@@ -32,6 +33,7 @@ private:
 	void update_textinfo();
 	void display_gameover();
 	
+	Uint32 time_left();
 	void events();	
 	void generate_enemies();
 	
