@@ -16,5 +16,17 @@ endif
 raptor: $(FILES)
 	g++ $(CFLAGS) $(FILES) -o $(EXE) $(LIBS)
 	
+Raptor.app: raptor
+	-mkdir Raptor.app    
+	-mkdir Raptor.app/Contents
+	-mkdir Raptor.app/Contents/MacOS
+	-mkdir Raptor.app/Contents/Resources
+	-mkdir Raptor.app/Contents/Resources/English.lproj
+	echo -n 'APPL????' > Raptor.app/Contents/PkgInfo
+	cp data/Info.plist Raptor.app/Contents/
+	cp data/Raptor.icns Raptor.app/Contents/Resources/
+	cp raptor Raptor.app/Contents/MacOS/Raptor
+
 clean:
 	rm raptor
+	rm -rf Raptor.app
