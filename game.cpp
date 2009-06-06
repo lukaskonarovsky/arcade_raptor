@@ -30,8 +30,7 @@ void Game::init() {
   // load background and images
   SDL_Surface* temp = IMG_Load("data/bg.jpg");
   mpBackground = SDL_DisplayFormat(temp);
-  SDL_FreeSurface(temp);  
-  Ship::init();
+  SDL_FreeSurface(temp);
   Projectile::init();
 
   // state variables

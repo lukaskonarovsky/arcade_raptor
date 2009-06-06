@@ -19,7 +19,6 @@ protected:
   static const int shift;
   
 public:
-  static void init();
   static const int LEFT, RIGHT, UP, DOWN;
   
   Ship(int x, int y);

@@ -12,10 +12,6 @@ const int Ship::DOWN  = 2;
 const int Ship::LEFT  = 3;
 const int Ship::RIGHT = 4;
 
-void Ship::init() {
-
-}
-
 Ship::Ship(int x, int y): mX(x), mY(y), mShoots(0) {
 
 }
