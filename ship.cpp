@@ -22,10 +22,11 @@ Ship::Ship(int x, int y): mX(x), mY(y), mShoots(0) {
 
 }
 
-Ship::~Ship(void) {
-  
-}
+Ship::~Ship(void) { }
 
+/**
+ * Load image based on name
+ */
 void Ship::load_image() {
   string filename = "data/";
   filename.append(mName);
@@ -111,6 +112,10 @@ int Ship::getHealth() {
   return mHealth;
 }
 
+/**
+ * Is computer? Need to be redefined in subclasses
+ * @return true
+ */
 bool Ship::isComputer() {
   return true;
 }
@@ -138,10 +143,16 @@ void Ship::allow_shooting() {
   mShoots = 0;
 }
 
+/**
+ * Get X coordinate
+ */
 int Ship::getX() {
   return mX;
 }
 
+/**
+ * Get Y coordinate
+ */
 int Ship::getY() {
   return mY;
 }

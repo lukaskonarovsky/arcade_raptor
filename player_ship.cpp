@@ -1,5 +1,8 @@
 #include "player_ship.h"
 
+/**
+ * Construct new player ship on default position with default amount of lives
+ */
 PlayerShip::PlayerShip(): Ship(300, 400) {
   mTopBoundY = 0 + 300;
   mBottomBoundY = 430;

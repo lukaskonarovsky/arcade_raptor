@@ -33,9 +33,7 @@ Projectile::Projectile(int x, int y, int dir): mX(x), mY(y), mDirection(dir), mA
   mX -= Projectile::image->w / 2;
 }
 
-Projectile::~Projectile(void) {
-  //cout<< "~projectile called" << endl;
-}
+Projectile::~Projectile(void) { }
 
 /**
  * Draw projectile
