@@ -193,7 +193,7 @@ void Game::update_enemies() {
       score+= (5 + (*s)->getPower());
       old_fortune = (*s)->getPower();
       delete *s;
-      enemies.erase(s);
+      enemies.erase(s++);
     }
   }
   if (enemies.empty()) {
