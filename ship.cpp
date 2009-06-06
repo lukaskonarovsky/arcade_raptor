@@ -4,8 +4,6 @@
 #include "ship.h"
 
 
-const int Ship::shift = 4;
-
 /* Directions */
 const int Ship::UP    = 1;
 const int Ship::DOWN  = 2;
@@ -15,7 +13,7 @@ const int Ship::RIGHT = 4;
 /**
  * Create new ship on position X, Y
  */
-Ship::Ship(int x, int y): mX(x), mY(y), mShoots(0) {
+Ship::Ship(int x, int y): mX(x), mY(y), mShoots(0), mSpeed(4) {
 
 }
 
@@ -47,10 +45,10 @@ void Ship::move() {
  */
 void Ship::move(int direction) {
   switch(direction) {
-    case Ship::UP:    if (mY > mTopBoundY)    { mY -= Ship::shift; } else { mDirection = DOWN; } break;
-    case Ship::DOWN:  if (mY < mBottomBoundY) { mY += Ship::shift; } else { mDirection = UP; } break;
-    case Ship::LEFT:  if (mX > 3)   { mX -= Ship::shift; } else { mDirection = RIGHT; } break;
-    case Ship::RIGHT: if (mX < 600) { mX += Ship::shift; } else { mDirection = LEFT; } break;
+    case Ship::UP:    if (mY > mTopBoundY)    { mY -= mSpeed; } else { mDirection = DOWN; } break;
+    case Ship::DOWN:  if (mY < mBottomBoundY) { mY += mSpeed; } else { mDirection = UP; } break;
+    case Ship::LEFT:  if (mX > 3)             { mX -= mSpeed; } else { mDirection = RIGHT; } break;
+    case Ship::RIGHT: if (mX < 600)           { mX += mSpeed; } else { mDirection = LEFT; } break;
   }
 }
 

@@ -17,9 +17,9 @@ protected:
   int mTopBoundY, mBottomBoundY;
   string mName;
   int mHealth, mShoots, mDirection;
+  int mSpeed;
   bool mComputer;
   SDL_Surface *image;
-  static const int shift;
   
 public:
   static const int LEFT, RIGHT, UP, DOWN;

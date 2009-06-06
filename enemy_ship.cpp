@@ -11,12 +11,12 @@ EnemyShip::EnemyShip(int x, int y, int power): Ship(x, y), mMoves(0), mPower(pow
   mHealth = power * 25 + 10;
   mChaoticLevel = 1;
   
-  if (mPower == 0) { mName = "smallrain"; }
+  if (mPower == 0) { mName = "smallrain"; mSpeed = 5; }
   if (mPower == 1) { mName = "rain"; mChaoticLevel = 2; }
   if (mPower == 2) { mName = "darkrain"; }
-  if (mPower == 3) { mName = "doomer"; }
+  if (mPower == 3) { mName = "doomer"; mSpeed = 3; }
   if (mPower == 4) { mName = "fenix"; mChaoticLevel = 2; }
-  if (mPower == 5) { mName = "blackfenix"; }
+  if (mPower == 5) { mName = "blackfenix"; mSpeed = 3; }
 
   load_image();
 }
