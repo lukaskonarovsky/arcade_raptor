@@ -12,6 +12,7 @@ private:
 public:
   PlayerShip();
   bool can_shoot();
+  bool isComputer();
 };
 
 #endif

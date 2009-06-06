@@ -12,3 +12,7 @@ PlayerShip::PlayerShip(): Ship(300, 400) {
 bool PlayerShip::can_shoot() {
   return mShoots < 3;
 }
+
+bool PlayerShip::isComputer() {
+  return false;
+}

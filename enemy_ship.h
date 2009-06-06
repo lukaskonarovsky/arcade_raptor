@@ -14,6 +14,7 @@ private:
 public:
 	EnemyShip(int x, int y, int power);	
 	bool can_shoot();
+	bool isComputer();
 	void random_move();
 	void change_direction();
 	int getPower();

@@ -26,13 +26,13 @@ public:
   
   void load_image();
   void move();
+  virtual bool isComputer();
   virtual void move(int direction); 
   void draw(SDL_Surface *screen);
   Projectile *fire();
   SDL_Rect getColRect();
   void hit(int damage);
   bool isAlive();
-  bool isComputer();
   int getHealth();
   void allow_shooting();
   virtual bool can_shoot();

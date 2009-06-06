@@ -63,8 +63,8 @@ Projectile *Ship::fire() {
 
 SDL_Rect Ship::getColRect() {
   SDL_Rect r;
-  r.w = Ship::image->w;
-  r.h = Ship::image->h;
+  r.w = image->w;
+  r.h = image->h;
   r.x = mX;
   r.y = mY;
   return r;
@@ -78,9 +78,8 @@ int Ship::getHealth() {
   return mHealth;
 }
 
-
 bool Ship::isComputer() {
-  return mName != "raptor";
+  return true;
 }
 
 bool Ship::isAlive() {
@@ -95,12 +94,10 @@ void Ship::allow_shooting() {
   mShoots = 0;
 }
 
-int Ship::getX()
-{
+int Ship::getX() {
   return mX;
 }
 
-int Ship::getY()
-{
+int Ship::getY() {
   return mY;
 }

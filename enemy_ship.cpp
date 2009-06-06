@@ -37,3 +37,8 @@ int EnemyShip::getPower() {
 bool EnemyShip::can_shoot() {
   return (mPower >= 1) && (mShoots < mPower);
 }
+
+
+bool EnemyShip::isComputer() {
+  return true;
+}

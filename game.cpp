@@ -89,6 +89,8 @@ void Game::generate_enemies() {
   if ((score > 22) && (fortune < 4) && (rand() % 3 == 1)) { 
     EnemyShip* second_enemy = new EnemyShip(320, 50, rand() % 3); 
     enemies.push_back(second_enemy);
+    EnemyShip* tsecond_enemy = new EnemyShip(320, 50, rand() % 3); 
+    enemies.push_back(tsecond_enemy);
   }
   EnemyShip* enemy = new EnemyShip(70 + fortune * 100, 20, fortune);
   enemies.push_back(enemy);
@@ -121,15 +123,14 @@ void Game::update_projectiles() {
   // player's projectiles
   for (p = player_shoots.begin(); p != player_shoots.end(); ++p) {
     SDL_Rect p_rect = (*p)->getColRect();
+    (*p)->update();
+    (*p)->draw(mpScreen);
     for (s = enemies.begin(); s != enemies.end(); ++s) {
       SDL_Rect s_rect = (*s)->getColRect();
       if (test_collision(p_rect, s_rect)) {
         (*s)->hit(2);
         (*p)->destroy();
-      } else {
-        (*p)->update();
-      }
-      (*p)->draw(mpScreen);
+      }      
     }
   }
   player_shoots.remove_if(projectile_not_alive);
@@ -193,15 +194,6 @@ void Game::update_textinfo() {
 * Update game state, redraw
  */
 void Game::update() {
-  SDL_BlitSurface(mpBackground, NULL, mpScreen, NULL);
-
-  update_projectiles();
-  update_enemies();
-  update_textinfo();
-
-  player->draw(mpScreen);
-  SDL_Flip(mpScreen);
-
   // handle fire!
   slowcounter++;
   if (slowcounter >= 10) { 
@@ -213,6 +205,18 @@ void Game::update() {
       (*s)->allow_shooting();
     }
   }
+  
+  SDL_BlitSurface(mpBackground, NULL, mpScreen, NULL);
+
+  update_projectiles();
+  update_enemies();
+  update_textinfo();
+  events(); 
+    
+  player->draw(mpScreen);
+  SDL_Flip(mpScreen);
+
+
 
   if (!player->isAlive()) {
     display_gameover();
@@ -245,7 +249,6 @@ void Game::run() {
 
   while (!gameover) {
     update();   
-    events();   
     SDL_Delay(time_left());
     next_time += time_interval;
   }
