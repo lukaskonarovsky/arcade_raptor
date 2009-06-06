@@ -25,6 +25,7 @@ private:
   int enemycounter;
   Uint32 next_time;
   bool gameover;
+  int old_fortune;
   char text_info[100];
   
   void update();

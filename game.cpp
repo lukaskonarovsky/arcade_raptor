@@ -38,6 +38,7 @@ void Game::init() {
   score = 0;
   slowcounter = 0;
   gameover = false;
+  old_fortune = 2;
 
   // inital enemy
   generate_enemies();
@@ -74,15 +75,23 @@ bool enemy_not_alive(Ship* e) {
 
 
 /**
-* Generate 1 or 2 enemies of random power
+ * Generate one or two enemies of random power depending on current score
+ * Never generates same enemy as right before
  */
 void Game::generate_enemies() {
-  int fortune = rand() % 6; // 0..5
-  if ((fortune < 2) && (rand() % 3 == 1)) { 
-    EnemyShip* second_enemy = new EnemyShip(320, 50, fortune); 
+  int fortune = 0; // 0..5
+  
+  do {
+    if (score <= 11)                   { fortune = rand() % 2; }
+    if ((score > 12) && (score <= 22)) { fortune = rand() % 3; }
+    if (score > 22)                    { fortune = rand() % 6; }
+  } while (fortune == old_fortune);
+  
+  if ((score > 22) && (fortune < 4) && (rand() % 3 == 1)) { 
+    EnemyShip* second_enemy = new EnemyShip(320, 50, rand() % 3); 
     enemies.push_back(second_enemy);
   }
-  EnemyShip* enemy = new EnemyShip(320, 50, fortune);
+  EnemyShip* enemy = new EnemyShip(70 + fortune * 100, 20, fortune);
   enemies.push_back(enemy);
 }
 
@@ -157,6 +166,7 @@ void Game::update_enemies() {
     // enemy cleanup
     if (!(*s)->isAlive()) {
       score+= (5 + (*s)->getPower());
+      old_fortune = (*s)->getPower();
       delete *s;
       enemies.erase(s);
     }
