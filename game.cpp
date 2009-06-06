@@ -9,7 +9,6 @@
 #include "player_ship.h"
 #include "enemy_ship.h"
 
-using namespace std;
 
 /** 
  * Init SDL, SDL_ttf, load background and static images, set inital state variables
@@ -236,6 +235,9 @@ void Game::update() {
 }
 
 void Game::display_gameover() {
+  using std::cout;
+  using std::endl;
+  
   SDL_FillRect(mpScreen, NULL, 10);
   sprintf(text_info, "Game finished. Final score: %d", score);
   cout << text_info << endl;

@@ -1,6 +1,7 @@
 CC=g++
 CFLAGS=-Wall -O2
 SOURCES=main.cpp game.cpp ship.cpp player_ship.cpp enemy_ship.cpp projectile.cpp
+HEADERS=*.h
 LIBS=
 EXECUTABLE=raptor
 OSTYPE=osx
@@ -16,7 +17,7 @@ ifeq "$(OSTYPE)" "linux"
 LIBS= -L/usr/lib -I/usr/include/SDL -lSDL -lSDL_image -lSDL_ttf -lpthread
 endif
 
-raptor: $(SOURCES)
+raptor: $(SOURCES) $(HEADERS)
 	$(CC) $(CFLAGS) $(SOURCES) $(LIBS) -o $(EXECUTABLE) 
 	
 Raptor.app: raptor data/Info.plist
@@ -35,7 +36,7 @@ Raptor.app: raptor data/Info.plist
 	cp raptor Raptor.app/Contents/MacOS/Raptor
 	cp -R osx/Frameworks/* Raptor.app/Contents/Frameworks
 	
-apidoc: $(SOURCES)
+apidoc: $(SOURCES) $(HEADERS)
 	doxygen doc/cnf
 	
 clean:

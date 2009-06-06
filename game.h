@@ -2,12 +2,14 @@
 #define _GAME_H
 
 #include <list>
+
 #include "SDL_ttf.h" 
+
 #include "player_ship.h"
 #include "enemy_ship.h"
 #include "projectile.h"
 
-using namespace std;
+using std::list;
 
 /**
  * Main object representing state of game and allowing all interactions

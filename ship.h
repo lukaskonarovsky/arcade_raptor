@@ -6,7 +6,7 @@
 
 #include "projectile.h"
 
-using namespace std;
+using std::string;
 
 /**
  * Generic ship object
