@@ -8,10 +8,11 @@
  */ 
 class PlayerShip: public Ship {
 private:
-  int mKills;
+  //int mKills;
   
 public:
   PlayerShip();
+  void repair(int bonus);
   bool can_shoot();
   bool isComputer();
 };

@@ -12,6 +12,16 @@ PlayerShip::PlayerShip(): Ship(300, 400) {
 }
 
 /**
+ * Gain health bonus by repair
+ * @param points 
+ */
+void PlayerShip::repair(int points) {
+  mHealth += points;
+  static int maximum_health = 125;
+  if (mHealth > maximum_health) { mHealth = maximum_health; }
+}
+
+/**
  * Can shoot?
  * @return If ship is allowed to shoot now
  */

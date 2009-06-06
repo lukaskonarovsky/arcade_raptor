@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-Wall -O2
-SOURCES=main.cpp game.cpp game_object.cpp ship.cpp player_ship.cpp enemy_ship.cpp projectile.cpp
+SOURCES=main.cpp game.cpp game_object.cpp ship.cpp player_ship.cpp enemy_ship.cpp projectile.cpp bonus.cpp
 HEADERS=*.h
 LIBS=
 EXECUTABLE=raptor

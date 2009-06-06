@@ -4,7 +4,8 @@
 #include "SDL/SDL.h"
 
 /** 
- * Game Object 
+ * Game Object is base class responsible for maintaining position, direction and 
+ * image representation of object.
  */
 class GameObject {
 protected:
@@ -16,10 +17,12 @@ public:
   GameObject(int x, int y);
   virtual ~GameObject(void);
 
-  bool isAlive();
   void draw(SDL_Surface*);
-  SDL_Rect getColRect();
   void destroy();
+  //virtual void update();
+  
+  bool isAlive();
+  SDL_Rect getColRect();
   int getX();
   int getY();
 };

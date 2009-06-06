@@ -11,6 +11,11 @@ GameObject::GameObject(int x, int y): mX(x), mY(y), mAlive(true) { }
 GameObject::~GameObject(void) { }
 
 /**
+ * Update object
+ */
+//void GameObject::update() { }
+
+/**
  * Draw object
  * @param screen Surface to be drawn
  */

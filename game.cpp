@@ -6,8 +6,6 @@
 #include "SDL_ttf.h" 
 
 #include "game.h"
-#include "player_ship.h"
-#include "enemy_ship.h"
 
 
 /** 
@@ -45,6 +43,10 @@ void Game::init() {
 
   // inital enemy
   generate_enemies();
+  
+  // inital bonus
+  Bonus *bonus = new Bonus(25 * (rand() % 20), 20 + (rand() % 10) * 20);
+  bonuses.push_back(bonus);
 
   // player ship
   player = new PlayerShip();
@@ -72,9 +74,9 @@ bool projectile_not_alive(Projectile* p) {
   return res;
 }
 
-bool enemy_not_alive(Ship* e) {
-  bool res = !e->isAlive();
-  if (res) delete e; 
+bool object_not_alive(GameObject* o) {
+  bool res = !o->isAlive();
+  if (res) delete o; 
   return res;
 }
 
@@ -154,7 +156,7 @@ void Game::update_projectiles() {
       }      
     }
   }
-  player_shoots.remove_if(projectile_not_alive);
+  player_shoots.remove_if(object_not_alive);
 
   // enemy projectiles
   for (p = enemy_shoots.begin(); p != enemy_shoots.end(); p++) {
@@ -166,7 +168,21 @@ void Game::update_projectiles() {
       (*p)->draw(mpScreen);
     }
   }
-  enemy_shoots.remove_if(projectile_not_alive);
+  enemy_shoots.remove_if(object_not_alive);
+  
+  list<Bonus*>::iterator o;
+
+  // bonuses
+  for (o = bonuses.begin(); o != bonuses.end(); o++) {
+    if (test_collision(*o, player)) {
+      player->repair(20);
+      (*o)->destroy();
+    } else { 
+      (*o)->update();
+      (*o)->draw(mpScreen);
+    }
+  }
+  bonuses.remove_if(object_not_alive);
 }
 
 /**
@@ -190,6 +206,10 @@ void Game::update_enemies() {
       old_fortune = (*s)->getPower();
       delete *s;
       enemies.erase(s++);
+      if (rand() % 4 == 1) {
+        Bonus *bonus = new Bonus(25 * (rand() % 20), 20 + (rand() % 5) * 20);
+        bonuses.push_back(bonus);
+      }
     }
   }
   if (enemies.empty()) {

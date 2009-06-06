@@ -8,6 +8,7 @@
 #include "player_ship.h"
 #include "enemy_ship.h"
 #include "projectile.h"
+#include "bonus.h"
 
 using std::list;
 
@@ -22,6 +23,7 @@ private:
   TTF_Font *mpFont;
   list<Projectile*> player_shoots;
   list<Projectile*> enemy_shoots;
+  list<Bonus*> bonuses;
   list<EnemyShip*> enemies;
   PlayerShip *player;
   
