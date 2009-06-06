@@ -29,6 +29,7 @@ private:
   char text_info[100];
   
   void update();
+  void update_slowcounter();  
   void update_projectiles();
   void update_enemies();
   void update_textinfo();

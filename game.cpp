@@ -89,8 +89,6 @@ void Game::generate_enemies() {
   if ((score > 22) && (fortune < 4) && (rand() % 3 == 1)) { 
     EnemyShip* second_enemy = new EnemyShip(320, 50, rand() % 3); 
     enemies.push_back(second_enemy);
-    EnemyShip* tsecond_enemy = new EnemyShip(320, 50, rand() % 3); 
-    enemies.push_back(tsecond_enemy);
   }
   EnemyShip* enemy = new EnemyShip(70 + fortune * 100, 20, fortune);
   enemies.push_back(enemy);
@@ -117,9 +115,28 @@ void Game::events() {
   }
 }
 
+/**
+ * Ensure player and enemies can shoot again
+ */
+void Game::update_slowcounter() { 
+  slowcounter++;
+  if (slowcounter >= 10) { 
+    slowcounter = 0; 
+    player->allow_shooting(); 
+    list<EnemyShip*>::iterator s;
+    for (s = enemies.begin(); s != enemies.end(); ++s) {
+      (*s)->allow_shooting();
+    }
+  }
+}
+
+/**
+ * Update. redraw projectiles and solves collisions
+ */
 void Game::update_projectiles() {
   list<Projectile*>::iterator p;
   list<EnemyShip*>::iterator s;
+
   // player's projectiles
   for (p = player_shoots.begin(); p != player_shoots.end(); ++p) {
     SDL_Rect p_rect = (*p)->getColRect();
@@ -151,6 +168,9 @@ void Game::update_projectiles() {
   enemy_shoots.remove_if(projectile_not_alive);
 }
 
+/**
+ * Update, redraw enemy ships and hold fire if they can shoot. Eventually cleanup and collect score.
+ */
 void Game::update_enemies() {
   list<EnemyShip*>::iterator s;
 
@@ -194,20 +214,9 @@ void Game::update_textinfo() {
 * Update game state, redraw
  */
 void Game::update() {
-  // handle fire!
-  slowcounter++;
-  if (slowcounter >= 10) { 
-    //cout << "* " << enemy_shoots.size() << " " << player_shoots.size() << endl;
-    slowcounter = 0; 
-    player->allow_shooting(); 
-    list<EnemyShip*>::iterator s;
-    for (s = enemies.begin(); s != enemies.end(); ++s) {
-      (*s)->allow_shooting();
-    }
-  }
-  
   SDL_BlitSurface(mpBackground, NULL, mpScreen, NULL);
-
+  
+  update_slowcounter();
   update_projectiles();
   update_enemies();
   update_textinfo();
@@ -215,8 +224,6 @@ void Game::update() {
     
   player->draw(mpScreen);
   SDL_Flip(mpScreen);
-
-
 
   if (!player->isAlive()) {
     display_gameover();

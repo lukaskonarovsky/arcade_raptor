@@ -18,6 +18,7 @@ raptor: $(FILES)
 	g++ $(CFLAGS) $(FILES) -o $(EXE) $(LIBS)
 	
 Raptor.app: raptor data/Info.plist
+	rm -rf Raptor.app
 	-mkdir Raptor.app    
 	-mkdir Raptor.app/Contents
 	-mkdir Raptor.app/Contents/MacOS
