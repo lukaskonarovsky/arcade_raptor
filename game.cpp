@@ -50,18 +50,20 @@ void Game::init() {
   player = new PlayerShip();
 }
 
-bool test_collision(SDL_Rect& r1, SDL_Rect& r2) {
-  if (r1.x < r2.x) {
-    if (r1.x + r1.w < r2.x) return false;
-  } else {
-    if (r2.x + r2.w < r1.x) return false;
-  }
-  if (r1.y < r2.y) {
-    if (r1.y + r1.h < r2.y) return false;
-  } else {
-    if (r2.y + r2.h < r1.y) return false;
-  }
-  return true;
+bool test_collision(GameObject *o1, GameObject *o2) {
+	SDL_Rect r1 = o1->getColRect();
+	SDL_Rect r2 = o2->getColRect();
+	if (r1.x < r2.x) {
+		if (r1.x + r1.w < r2.x) return false;
+	} else {
+		if (r2.x + r2.w < r1.x) return false;
+	}
+	if (r1.y < r2.y) {
+		if (r1.y + r1.h < r2.y) return false;
+	} else {
+		if (r2.y + r2.h < r1.y) return false;
+	}
+	return true;
 }
 
 bool projectile_not_alive(Projectile* p) {
@@ -143,12 +145,10 @@ void Game::update_projectiles() {
 
   // player's projectiles
   for (p = player_shoots.begin(); p != player_shoots.end(); ++p) {
-    SDL_Rect p_rect = (*p)->getColRect();
     (*p)->update();
     (*p)->draw(mpScreen);
     for (s = enemies.begin(); s != enemies.end(); ++s) {
-      SDL_Rect s_rect = (*s)->getColRect();
-      if (test_collision(p_rect, s_rect)) {
+      if (test_collision(*p, *s)) {
         (*s)->hit(2);
         (*p)->destroy();
       }      
@@ -157,11 +157,8 @@ void Game::update_projectiles() {
   player_shoots.remove_if(projectile_not_alive);
 
   // enemy projectiles
-  SDL_Rect player_rect = player->getColRect();
-
   for (p = enemy_shoots.begin(); p != enemy_shoots.end(); p++) {
-    SDL_Rect projectile_rect = (*p)->getColRect();
-    if (test_collision(projectile_rect, player_rect)) {
+    if (test_collision(*p, player)) {
       player->hit(2);
       (*p)->destroy();
     } else { 
@@ -260,7 +257,7 @@ void Game::display_gameover() {
  * Start and maintain main game loop 
  */
 void Game::run() {  
-  static int time_interval = 1000 / 30;
+  static int time_interval = 1000 / 25;
   next_time = SDL_GetTicks() + time_interval;
 
   while (!gameover) {

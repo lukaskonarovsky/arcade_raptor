@@ -13,9 +13,7 @@ const int Ship::RIGHT = 4;
 /**
  * Create new ship on position X, Y
  */
-Ship::Ship(int x, int y): mX(x), mY(y), mShoots(0), mSpeed(4) {
-
-}
+Ship::Ship(int x, int y): GameObject(x, y), mShoots(0), mSpeed(4) { }
 
 Ship::~Ship(void) { }
 
@@ -53,20 +51,6 @@ void Ship::move(int direction) {
 }
 
 /**
- * Draw ship
- * @param screen Surface to be drawn
- */
-void Ship::draw(SDL_Surface *screen) {
-  SDL_Rect dest;
-  if (!Ship::isAlive()) { Ship::image = IMG_Load("data/explosion.png"); }
-  dest.x = mX;
-  dest.y = mY;
-  dest.w = Ship::image->w;
-  dest.h = Ship::image->h;
-  SDL_BlitSurface(image, NULL, screen, &dest);
-}
-
-/**
  * Fire projectile
  * @return Newly fired projectile obj
  */
@@ -79,24 +63,15 @@ Projectile *Ship::fire() {
 }
 
 /**
- * Get collision rectangle
- * @return SDL_Rect
- */
-SDL_Rect Ship::getColRect() {
-  SDL_Rect r;
-  r.w = image->w;
-  r.h = image->h;
-  r.x = mX;
-  r.y = mY;
-  return r;
-}
-
-/**
  * Hit ship
  * @param damage 
  */
 void Ship::hit(int damage) {
   mHealth -= damage;
+  if (mHealth <= 0) { 
+    mAlive = false;
+    image = IMG_Load("data/explosion.png");
+  }
 }
 
 /**
@@ -116,14 +91,6 @@ bool Ship::isComputer() {
 }
 
 /**
- * Determine if ship is alive
- * @return true if alive
- */
-bool Ship::isAlive() {
-  return mHealth > 0;
-}
-
-/**
  * Determine if ship is allowed to fire
  * @return true if allowed
  */
@@ -138,16 +105,3 @@ void Ship::allow_shooting() {
   mShoots = 0;
 }
 
-/**
- * Get X coordinate
- */
-int Ship::getX() {
-  return mX;
-}
-
-/**
- * Get Y coordinate
- */
-int Ship::getY() {
-  return mY;
-}

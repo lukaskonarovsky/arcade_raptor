@@ -8,7 +8,7 @@ EnemyShip::EnemyShip(int x, int y, int power): Ship(x, y), mMoves(0), mPower(pow
   mDirection = rand() % 4 + 1;
   mTopBoundY = 0;
   mBottomBoundY = 360;
-  mHealth = power * 25 + 10;
+  mHealth = power * 25 + 20;
   mChaoticLevel = 1;
   
   if (mPower == 0) { mName = "smallrain"; mSpeed = 5; }

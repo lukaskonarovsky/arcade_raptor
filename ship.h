@@ -4,6 +4,7 @@
 #include <string>
 #include "SDL/SDL.h"
 
+#include "game_object.h"
 #include "projectile.h"
 
 using std::string;
@@ -11,15 +12,14 @@ using std::string;
 /**
  * Generic ship object
  */
-class Ship {
+class Ship: public GameObject {
 protected:
-  int mX, mY;
   int mTopBoundY, mBottomBoundY;
   string mName;
-  int mHealth, mShoots, mDirection;
+  int mHealth;
+  int mShoots;
   int mSpeed;
   bool mComputer;
-  SDL_Surface *image;
   
 public:
   static const int LEFT, RIGHT, UP, DOWN;
@@ -31,16 +31,11 @@ public:
   void move();
   virtual bool isComputer();
   virtual void move(int direction); 
-  void draw(SDL_Surface *screen);
   Projectile *fire();
-  SDL_Rect getColRect();
   void hit(int damage);
-  bool isAlive();
   int getHealth();
   void allow_shooting();
   virtual bool can_shoot();
-  int getX();
-  int getY();
   
 };
 

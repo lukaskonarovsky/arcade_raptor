@@ -3,7 +3,6 @@
 
 #include "projectile.h"
 
-using namespace std;
 
 SDL_Surface* Projectile::blue_image = NULL;
 SDL_Surface* Projectile::red_image  = NULL;
@@ -24,7 +23,8 @@ void Projectile::init() {
 /**
  * Construct new projetile on coordinates with selected direction
  */
-Projectile::Projectile(int x, int y, int dir): mX(x), mY(y), mDirection(dir), mAlive(true) {
+Projectile::Projectile(int x, int y, int dir): GameObject(x, y) {
+  mDirection = dir;
   if (mDirection == 1) {
     Projectile::image = Projectile::blue_image;
   } else {
@@ -33,52 +33,18 @@ Projectile::Projectile(int x, int y, int dir): mX(x), mY(y), mDirection(dir), mA
   mX -= Projectile::image->w / 2;
 }
 
-Projectile::~Projectile(void) { }
-
 /**
- * Draw projectile
- * @param screen Surface to be drawn
+ * Destruct projetile
  */
-void Projectile::draw(SDL_Surface *screen) {
-  SDL_Rect dest;
-  dest.x = mX;
-  dest.y = mY;
-  dest.w = Projectile::image->w;
-  dest.h = Projectile::image->h;
-  SDL_BlitSurface(image, NULL, screen, &dest);
-}
+Projectile::~Projectile(void) { }
 
 /**
  * Update position of projectile
  */
 void Projectile::update() {
-  mY -= 5 * mDirection;
-}
-
-/**
- * Determine if projectile is alive
- * @return true if alive
- */
-bool Projectile::isAlive() {
-  return mAlive && mY > -100 && mY < 500;
-}
-
-/**
- * Get collision rectangle
- * @return SDL_Rect
- */
-SDL_Rect Projectile::getColRect() {
-  SDL_Rect r;
-  r.w = Projectile::image->w;
-  r.h = Projectile::image->h;
-  r.x = mX;
-  r.y = mY;
-  return r;
-}
-
-/**
- * Mark projectile as ready to be deleted 
- */
-void Projectile::destroy() {
-  mAlive = false;
+  if (mY > -100 && mY < 500) { 
+    mY -= 5 * mDirection;
+  } else {
+    mAlive = false;
+  }
 }
