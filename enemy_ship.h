@@ -5,6 +5,9 @@
 
 using namespace std;
 
+/** 
+ * Ship controlled by computer
+ */
 class EnemyShip: public Ship {
 private:
 	int mMoves;

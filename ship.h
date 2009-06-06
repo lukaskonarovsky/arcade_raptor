@@ -1,13 +1,16 @@
 #ifndef _SHIP_H
 #define _SHIP_H
 
-#include "SDL/SDL.h"
-#include "projectile.h"
 #include <string>
+#include "SDL/SDL.h"
 
+#include "projectile.h"
 
 using namespace std;
 
+/**
+ * Generic ship object
+ */
 class Ship {
 protected:
   int mX, mY;

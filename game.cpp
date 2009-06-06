@@ -1,14 +1,19 @@
 #include <iostream>
 #include <stdio.h>
+
 #include "SDL/SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h" 
+
 #include "game.h"
 #include "player_ship.h"
 #include "enemy_ship.h"
 
 using namespace std;
 
+/** 
+ * Init SDL, SDL_ttf, load background and static images, set inital state variables
+ */
 void Game::init() {
   srand((unsigned)time(0)); 
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -249,7 +254,9 @@ void Game::display_gameover() {
   gameover = true;
 }
 
-/* Main game loop */
+/** 
+ * Start and maintain main game loop 
+ */
 void Game::run() {  
   static int time_interval = 1000 / 30;
   next_time = SDL_GetTicks() + time_interval;

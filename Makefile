@@ -35,6 +35,10 @@ Raptor.app: raptor data/Info.plist
 	cp raptor Raptor.app/Contents/MacOS/Raptor
 	cp -R osx/Frameworks/* Raptor.app/Contents/Frameworks
 	
+apidoc: $(SOURCES)
+	doxygen doc/cnf
+	
 clean:
 	rm raptor
 	rm -rf Raptor.app
+	rm -rf doc/html

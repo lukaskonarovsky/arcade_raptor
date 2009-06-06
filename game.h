@@ -9,6 +9,9 @@
 
 using namespace std;
 
+/**
+ * Main object representing state of game and allowing all interactions
+ */
 class Game {
 private:
   SDL_Surface *mpScreen;

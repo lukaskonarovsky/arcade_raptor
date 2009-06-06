@@ -3,6 +3,9 @@
 
 #include "SDL/SDL.h"
 
+/** 
+ * Projectile 
+ */
 class Projectile {
 private:
   int mX, mY, mDirection;

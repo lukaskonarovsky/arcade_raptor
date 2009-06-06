@@ -1,4 +1,3 @@
-#include "ship.h"
 #include "player_ship.h"
 
 PlayerShip::PlayerShip(): Ship(300, 400) {
@@ -9,10 +8,18 @@ PlayerShip::PlayerShip(): Ship(300, 400) {
   load_image();
 }
 
+/**
+ * Can shoot?
+ * @return If ship is allowed to shoot now
+ */
 bool PlayerShip::can_shoot() {
   return mShoots < 3;
 }
 
+/**
+ * Is computer?
+ * @return false
+ */
 bool PlayerShip::isComputer() {
   return false;
 }

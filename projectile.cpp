@@ -1,12 +1,16 @@
 #include "SDL/SDL.h"
 #include "SDL_image.h"
+
 #include "projectile.h"
-#include <iostream>
+
 using namespace std;
 
 SDL_Surface* Projectile::blue_image = NULL;
 SDL_Surface* Projectile::red_image  = NULL;
 
+/**
+ * Load fire images
+ */
 void Projectile::init() {
   Projectile::blue_image = IMG_Load("data/blue_fire.png");
   Projectile::red_image  = IMG_Load("data/red_fire.png");
@@ -17,6 +21,9 @@ void Projectile::init() {
   }
 }
 
+/**
+ * Construct new projetile on coordinates with selected direction
+ */
 Projectile::Projectile(int x, int y, int dir): mX(x), mY(y), mDirection(dir), mAlive(true) {
   if (mDirection == 1) {
     Projectile::image = Projectile::blue_image;
@@ -30,6 +37,10 @@ Projectile::~Projectile(void) {
   //cout<< "~projectile called" << endl;
 }
 
+/**
+ * Draw projectile
+ * @param screen Surface to be drawn
+ */
 void Projectile::draw(SDL_Surface *screen) {
   SDL_Rect dest;
   dest.x = mX;
@@ -39,14 +50,25 @@ void Projectile::draw(SDL_Surface *screen) {
   SDL_BlitSurface(image, NULL, screen, &dest);
 }
 
+/**
+ * Update position of projectile
+ */
 void Projectile::update() {
   mY -= 5 * mDirection;
 }
 
+/**
+ * Determine if projectile is alive
+ * @return true if alive
+ */
 bool Projectile::isAlive() {
   return mAlive && mY > -100 && mY < 500;
 }
 
+/**
+ * Get collision rectangle
+ * @return SDL_Rect
+ */
 SDL_Rect Projectile::getColRect() {
   SDL_Rect r;
   r.w = Projectile::image->w;
@@ -56,6 +78,9 @@ SDL_Rect Projectile::getColRect() {
   return r;
 }
 
+/**
+ * Mark projectile as ready to be deleted 
+ */
 void Projectile::destroy() {
   mAlive = false;
 }

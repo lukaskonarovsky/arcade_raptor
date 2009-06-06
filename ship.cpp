@@ -1,8 +1,11 @@
-#include "SDL/SDL.h"
-#include "SDL_image.h"
-#include "ship.h"
 #include <iostream>
 #include <stdio.h>
+
+#include "SDL/SDL.h"
+#include "SDL_image.h"
+
+#include "ship.h"
+
 
 const int Ship::shift = 4;
 
@@ -12,6 +15,9 @@ const int Ship::DOWN  = 2;
 const int Ship::LEFT  = 3;
 const int Ship::RIGHT = 4;
 
+/**
+ * Create new ship on position X, Y
+ */
 Ship::Ship(int x, int y): mX(x), mY(y), mShoots(0) {
 
 }
@@ -30,10 +36,17 @@ void Ship::load_image() {
   }
 }
 
+/**
+ * Move ship in last direction
+ */
 void Ship::move() {
   move(mDirection);
 }
 
+/**
+ * Move ship
+ * @param direction One of DOWN, UP, LEFT or RIGHT
+ */
 void Ship::move(int direction) {
   switch(direction) {
     case Ship::UP:    if (mY > mTopBoundY)    { mY -= Ship::shift; } else { mDirection = DOWN; } break;
@@ -43,6 +56,10 @@ void Ship::move(int direction) {
   }
 }
 
+/**
+ * Draw ship
+ * @param screen Surface to be drawn
+ */
 void Ship::draw(SDL_Surface *screen) {
   SDL_Rect dest;
   if (!Ship::isAlive()) { Ship::image = IMG_Load("data/explosion.png"); }
@@ -53,6 +70,10 @@ void Ship::draw(SDL_Surface *screen) {
   SDL_BlitSurface(image, NULL, screen, &dest);
 }
 
+/**
+ * Fire projectile
+ * @return Newly fired projectile obj
+ */
 Projectile *Ship::fire() {
   int x_shift = Ship::image->w / 2;
   int y_shift = (isComputer() ? Ship::image->h : 0);
@@ -61,6 +82,10 @@ Projectile *Ship::fire() {
   return p;
 }
 
+/**
+ * Get collision rectangle
+ * @return SDL_Rect
+ */
 SDL_Rect Ship::getColRect() {
   SDL_Rect r;
   r.w = image->w;
@@ -70,10 +95,18 @@ SDL_Rect Ship::getColRect() {
   return r;
 }
 
+/**
+ * Hit ship
+ * @param damage 
+ */
 void Ship::hit(int damage) {
   mHealth -= damage;
 }
 
+/**
+ * Get health
+ * @return health
+ */
 int Ship::getHealth() {
   return mHealth;
 }
@@ -82,14 +115,25 @@ bool Ship::isComputer() {
   return true;
 }
 
+/**
+ * Determine if ship is alive
+ * @return true if alive
+ */
 bool Ship::isAlive() {
   return mHealth > 0;
 }
 
+/**
+ * Determine if ship is allowed to fire
+ * @return true if allowed
+ */
 bool Ship::can_shoot() {
   return false;
 }
 
+/**
+ * Mark ship as allowed to fire
+ */
 void Ship::allow_shooting() {
   mShoots = 0;
 }
