@@ -144,56 +144,59 @@ void Game::update_slowcounter() {
     for (s = enemies.begin(); s != enemies.end(); ++s) {
       (*s)->allow_shooting();
     }
+    if (enemies.empty()) {
+      generate_enemies();
+    }
   }
 }
 
 /**
- * Update. redraw projectiles and solves collisions
+ * Update projectiles and solves collisions
  */
 void Game::update_projectiles() {
-  list<Projectile*>::iterator p;
-  list<EnemyShip*>::iterator s;
+  list<Projectile*>::iterator projectile;
+  list<EnemyShip*>::iterator enemy;
 
   // player's projectiles
-  for (p = player_shoots.begin(); p != player_shoots.end(); ++p) {
-    (*p)->update();
-    (*p)->draw(mpScreen);
-    for (s = enemies.begin(); s != enemies.end(); ++s) {
-      if (test_collision(*p, *s)) {
-        (*s)->hit(2);
-        (*p)->destroy();
+  for (projectile = player_shoots.begin(); projectile != player_shoots.end(); ++projectile) {
+    (*projectile)->update();
+    (*projectile)->draw(mpScreen);
+    for (enemy = enemies.begin(); enemy != enemies.end(); enemy++) {
+      if (test_collision(*projectile, *enemy)) {
+        (*enemy)->hit(2);
+        (*projectile)->destroy();
       }      
     }
   }
   player_shoots.remove_if(object_not_alive);
 
   // enemy projectiles
-  for (p = enemy_shoots.begin(); p != enemy_shoots.end(); p++) {
-    if (test_collision(*p, player)) {
+  for (projectile = enemy_shoots.begin(); projectile != enemy_shoots.end(); ++projectile) {
+    if (test_collision(*projectile, player)) {
       player->hit(2);
-      (*p)->destroy();
+      (*projectile)->destroy();
     } else { 
-      (*p)->update();
-      (*p)->draw(mpScreen);
+      (*projectile)->update();
+      (*projectile)->draw(mpScreen);
     }
   }
   enemy_shoots.remove_if(object_not_alive);
   
-  list<Bonus*>::iterator o;
+  list<Bonus*>::iterator bonus;
 
   // bonuses
-  for (o = bonuses.begin(); o != bonuses.end(); o++) {
-    if (test_collision(*o, player)) {
-      int type = (*o)->getType();
+  for (bonus = bonuses.begin(); bonus != bonuses.end(); ++bonus) {
+    if (test_collision(*bonus, player)) {
+      int type = (*bonus)->getType();
       if (type == Bonus::ROCKET) {
         player->hit(20);
       } else {
         player->repair(20);
       }
-      (*o)->destroy();
+      (*bonus)->destroy();
     } else { 
-      (*o)->update();
-      (*o)->draw(mpScreen);
+      (*bonus)->update();
+      (*bonus)->draw(mpScreen);
     }
   }
   bonuses.remove_if(object_not_alive);
@@ -226,9 +229,7 @@ void Game::update_enemies() {
       }
     }
   }
-  if (enemies.empty()) {
-    generate_enemies();
-  }
+
 }
 
 void Game::update_textinfo() {
