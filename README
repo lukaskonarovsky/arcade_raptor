@@ -1,0 +1,22 @@
+Arcade Raptor is variation of space shooter game written in C++ with SDL lib.
+
+Use arrow keys and space for fire.
+
+Build instructions
+==================
+
+For OS X:
+	make Raptor.app
+
+and it should build agains bundled compiled SDL, SDL_image and SDL_ttl
+
+For Linux:
+	make OSTYPE=linux
+
+and it should compile(if you have libsdl and friends), run by ./raptor as long is data subdirectory in place
+
+For other platforms:
+try yourself, write me about it
+
+Documentation can be build by:
+	make apidoc
