@@ -45,7 +45,7 @@ void Game::init() {
   generate_enemies();
   
   // inital bonus
-  Bonus *bonus = new Bonus(25 * (rand() % 20), 20 + (rand() % 10) * 20);
+  Bonus *bonus = new Bonus(25 * (rand() % 20), 20 + (rand() % 10) * 20, rand() % 4);
   bonuses.push_back(bonus);
 
   // player ship
@@ -91,10 +91,11 @@ void Game::generate_enemies() {
   do {
     if (score <= 11)                   { fortune = rand() % 2; }
     if ((score > 12) && (score <= 22)) { fortune = rand() % 3; }
-    if (score > 22)                    { fortune = rand() % 6; }
+    if ((score > 22) && (score <= 62)) { fortune = rand() % 5; }
+    if (score > 62)                    { fortune = rand() % 6; }
   } while (fortune == old_fortune);
   
-  if ((score > 22) && (fortune < 4) && (rand() % 3 == 1)) { 
+  if ((score > 22) && (fortune < 5) && (rand() % 3 == 1)) { 
     EnemyShip* second_enemy = new EnemyShip(320, 50, rand() % 3); 
     enemies.push_back(second_enemy);
   }
@@ -175,7 +176,12 @@ void Game::update_projectiles() {
   // bonuses
   for (o = bonuses.begin(); o != bonuses.end(); o++) {
     if (test_collision(*o, player)) {
-      player->repair(20);
+      int type = (*o)->getType();
+      if (type == Bonus::ROCKET) {
+        player->hit(20);
+      } else {
+        player->repair(20);
+      }
       (*o)->destroy();
     } else { 
       (*o)->update();
@@ -206,8 +212,8 @@ void Game::update_enemies() {
       old_fortune = (*s)->getPower();
       delete *s;
       enemies.erase(s++);
-      if (rand() % 4 == 1) {
-        Bonus *bonus = new Bonus(25 * (rand() % 20), 20 + (rand() % 5) * 20);
+      if (rand() % 3 == 1) {
+        Bonus *bonus = new Bonus(25 * (rand() % 20), 20 + (rand() % 5) * 20, rand() % 4);
         bonuses.push_back(bonus);
       }
     }

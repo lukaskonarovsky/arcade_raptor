@@ -9,12 +9,17 @@
  * Bonus 
  */
 class Bonus: public GameObject {
-
+private:
+  int mType;
+  
 public:
-  Bonus(int x, int y);
+  static const int ROCKET, REPAIR, SHIELD, MONEY;
+  
+  Bonus(int x, int y, int type);
   ~Bonus(void);
 
   void update();
+  int getType();
 };
 
 #endif
