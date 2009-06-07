@@ -57,12 +57,23 @@ void Game::init() {
 }
 
 /**
+ * Test if game objects is alive and calls its destructor if is not
+ * @param o Game object
+ * @return bool 
+ */
+bool object_not_alive(GameObject* o) {
+  bool res = !o->isAlive();
+  if (res) delete o; 
+  return res;
+}
+
+/**
  * Test if 2 game objects colide
  * @param o1 First object
  * @param o2 Second object
  * @return bool 
  */
-bool test_collision(GameObject *o1, GameObject *o2) {
+bool Game::test_collision(GameObject *o1, GameObject *o2) {
 	SDL_Rect r1 = o1->getColRect();
 	SDL_Rect r2 = o2->getColRect();
 	if (r1.x < r2.x) {
@@ -77,18 +88,6 @@ bool test_collision(GameObject *o1, GameObject *o2) {
 	}
 	return true;
 }
-
-/**
- * Test if game objects is alive and calls its destructor if is not
- * @param o Game object
- * @return bool 
- */
-bool object_not_alive(GameObject* o) {
-  bool res = !o->isAlive();
-  if (res) delete o; 
-  return res;
-}
-
 
 /**
  * Generate one or two enemies of random power depending on current score

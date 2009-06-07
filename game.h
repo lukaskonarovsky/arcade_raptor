@@ -5,6 +5,7 @@
 
 #include "SDL_ttf.h" 
 
+#include "game_object.h"
 #include "player_ship.h"
 #include "enemy_ship.h"
 #include "projectile.h"
@@ -21,6 +22,7 @@ private:
   SDL_Surface *mpBackground;
   SDL_Surface *mpTextSurface;
   TTF_Font *mpFont;
+  
   list<Projectile*> player_shoots;
   list<Projectile*> enemy_shoots;
   list<Bonus*> bonuses;
@@ -45,6 +47,7 @@ private:
   Uint32 time_left();
   void events();  
   void generate_enemies();
+  bool test_collision(GameObject *o1, GameObject *o2);
   
 public: 
   void init();
