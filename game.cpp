@@ -18,16 +18,20 @@ void Game::init() {
   }
 
   mpScreen = SDL_SetVideoMode(640, 480, 16, SDL_HWSURFACE | SDL_DOUBLEBUF);
-  SDL_WM_SetCaption("Raptor", 0);
   if (mpScreen == NULL) {
     fprintf(stderr, "Video 640x480 mode failed: %s\n", SDL_GetError()); exit(1);
   }
+  
+  atexit(SDL_Quit);
+  
+  SDL_WM_SetCaption("Raptor", 0);
+  SDL_ShowCursor(SDL_DISABLE);
 
+  // font loading
   if (TTF_Init() == -1)  {
     fprintf(stderr, "SDL_ttf failed: %s\n", TTF_GetError()); exit(1);
   }
   mpFont = TTF_OpenFont("data/Vera.ttf", 15);
-  atexit(SDL_Quit);
 
   // load background and images
   SDL_Surface* temp = IMG_Load("data/bg.jpg");
@@ -45,13 +49,19 @@ void Game::init() {
   generate_enemies();
   
   // inital bonus
-  Bonus *bonus = new Bonus(25 * (rand() % 20), 20 + (rand() % 10) * 20, rand() % 4);
+  Bonus *bonus = new Bonus(20 + 25 * (rand() % 20), 20 + (rand() % 10) * 20, rand() % 4);
   bonuses.push_back(bonus);
 
   // player ship
   player = new PlayerShip();
 }
 
+/**
+ * Test if 2 game objects colide
+ * @param o1 First object
+ * @param o2 Second object
+ * @return bool 
+ */
 bool test_collision(GameObject *o1, GameObject *o2) {
 	SDL_Rect r1 = o1->getColRect();
 	SDL_Rect r2 = o2->getColRect();
@@ -68,12 +78,11 @@ bool test_collision(GameObject *o1, GameObject *o2) {
 	return true;
 }
 
-bool projectile_not_alive(Projectile* p) {
-  bool res = !p->isAlive();
-  if (res) delete p;
-  return res;
-}
-
+/**
+ * Test if game objects is alive and calls its destructor if is not
+ * @param o Game object
+ * @return bool 
+ */
 bool object_not_alive(GameObject* o) {
   bool res = !o->isAlive();
   if (res) delete o; 
@@ -213,7 +222,7 @@ void Game::update_enemies() {
       delete *s;
       enemies.erase(s++);
       if (rand() % 3 == 1) {
-        Bonus *bonus = new Bonus(25 * (rand() % 20), 20 + (rand() % 5) * 20, rand() % 4);
+        Bonus *bonus = new Bonus(20 + 25 * (rand() % 20), 20 + (rand() % 5) * 20, rand() % 4);
         bonuses.push_back(bonus);
       }
     }
