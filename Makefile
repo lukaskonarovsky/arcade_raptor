@@ -36,10 +36,14 @@ Raptor.app: raptor data/Info.plist
 	cp raptor Raptor.app/Contents/MacOS/Raptor
 	cp -R osx/Frameworks/* Raptor.app/Contents/Frameworks
 	
+dmg: Raptor.app
+	hdiutil create Raptor.dmg -volname "Arcade Raptor" -fs HFS+ -srcfolder "Raptor.app"
+	
 apidoc: $(SOURCES) $(HEADERS)
 	doxygen doc/cnf
 	
 clean:
 	rm raptor
 	rm -rf Raptor.app
+	rm -rf Raptor.dmg
 	rm -rf doc/html
