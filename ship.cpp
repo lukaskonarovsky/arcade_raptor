@@ -21,9 +21,7 @@ Ship::~Ship(void) { }
  * Load image based on name
  */
 void Ship::load_image() {
-  string filename = "data/";
-  filename.append(mName);
-  filename.append(".png");
+  string filename = "data/" + mName + ".png";
   image = IMG_Load(filename.c_str());
   if (image == NULL) {
     fprintf(stderr, "Image loading failed: %s\n", IMG_GetError()); exit(1);
