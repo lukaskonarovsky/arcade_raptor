@@ -1,5 +1,6 @@
 CC=g++
-CFLAGS=-Wall -O2
+CFLAGS=-Wall -O2 
+SPEED= -ffast-math
 SOURCES=main.cpp game.cpp game_object.cpp ship.cpp player_ship.cpp enemy_ship.cpp projectile.cpp bonus.cpp
 HEADERS=*.h
 LIBS=
@@ -8,17 +9,19 @@ OSTYPE=osx
 
 ifeq "$(OSTYPE)" "osx"
 SOURCES+=SDLMain.m
+CFLAGS+=$(SPEED)
+FRAMEWORKS=-framework SDL -framework SDL_image -framework SDL_ttf -framework Cocoa 
 LIBS= -I./osx/Frameworks/SDL.framework/Headers \
       -I./osx/Frameworks/SDL_image.framework/Headers \
-      -I./osx/Frameworks/SDL_ttf.framework/Headers \
-      -framework SDL -framework SDL_image -framework SDL_ttf -framework Cocoa 
+      -I./osx/Frameworks/SDL_ttf.framework/Headers 
 endif
 ifeq "$(OSTYPE)" "linux"
 LIBS= -L/usr/lib -I/usr/include/SDL -lSDL -lSDL_image -lSDL_ttf -lpthread
+FRAMEWORKS=
 endif
 
 raptor: $(SOURCES) $(HEADERS)
-	$(CC) $(CFLAGS) $(SOURCES) $(LIBS) -o $(EXECUTABLE) 
+	$(CC) $(CFLAGS) $(SOURCES) $(LIBS) $(FRAMEWORKS) -o $(EXECUTABLE) 
 	
 Raptor.app: raptor data/Info.plist
 	rm -rf Raptor.app
